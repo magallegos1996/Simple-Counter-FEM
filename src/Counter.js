@@ -1,14 +1,15 @@
 import React from 'react';
 
 const Counter = ({max}) => {
-  const getStateFromLocalStorage = () => {
-    const storage = localStorage.getItem('counterState');
-    if (storage) return JSON.parse(storage);
-    return { count: 0 };
+  const getStateFromLocalStorage = (defaultValue, key) => {
+    const storage = localStorage.getItem(key);
+    if (storage) return JSON.parse(storage).value;
+    return defaultValue;
   };
   const useLocalStorage = (defaultValue, key) => {
     const initialValue = getStateFromLocalStorage(defaultValue, key);
     const [value, setValue] = React.useState(initialValue);
+
     React.useEffect(() => {
       localStorage.setItem(key, JSON.stringify({ value }));
     }, [value]);
