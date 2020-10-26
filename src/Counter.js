@@ -1,7 +1,22 @@
 import React from 'react';
 
 const Counter = ({max}) => {
-  const [count, setCount] = React.useState(0);
+  const getStateFromLocalStorage = () => {
+    const storage = localStorage.getItem('counterState');
+    if (storage) return JSON.parse(storage);
+    return { count: 0 };
+  };
+  const useLocalStorage = (defaultValue, key) => {
+    const initialValue = getStateFromLocalStorage(defaultValue, key);
+    const [value, setValue] = React.useState(initialValue);
+    React.useEffect(() => {
+      localStorage.setItem(key, JSON.stringify({ value }));
+    }, [value]);
+
+    return [value, setValue];
+  };
+  const [count, setCount] = useLocalStorage(0, 'count');
+
   const increment = () => {
     setCount(c => {
       if (c >= max) return c;
