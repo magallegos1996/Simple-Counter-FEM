@@ -17,6 +17,19 @@ const Counter = ({max}) => {
     return [value, setValue];
   };
   const [count, setCount] = useLocalStorage(0, 'count');
+  const countRef = React.useRef();
+  let message = '';
+
+  if (countRef.current < count) message = 'Higher';
+  if (countRef.current > count) message = 'Lower';
+
+  countRef.current = count;
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      console.log(`You clicked ${countRef.current} times`);
+    }, 3000);
+  }, [count]);
 
   const increment = () => {
     setCount(c => {
@@ -29,6 +42,7 @@ const Counter = ({max}) => {
 
   return (
     <main className="Counter">
+      <p>{message}</p>
       <p className="count">{count}</p>
       <section className="controls">
         <button onClick={increment}>Increment</button>

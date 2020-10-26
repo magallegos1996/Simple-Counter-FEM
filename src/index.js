@@ -5,14 +5,14 @@ import Counter from './Counter';
 
 import './styles.scss';
 
-/*const Application = () => {
+const Application = () => {
   return (
     <main className="Application">
       <section className="Counters">
-        <Counter />
+        <Counter max={15}/>
       </section>
     </main>
   );
-};*/
+};
 
-render(<Counter max={10} />, document.getElementById('root'));
+render(<Application />, document.getElementById('root'));
